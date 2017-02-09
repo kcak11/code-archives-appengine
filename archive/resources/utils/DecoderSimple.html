@@ -1,0 +1,61 @@
+<html>
+<body>
+<form name="inpForm">
+<textarea name="inpBox" rows="10" cols="80">
+</textarea>
+&nbsp;&nbsp;
+<textarea name="scriptInputBox" rows="10" cols="30">
+Paste your JavaScript MultiLine Encoded Content & click the "Extract Content" button.
+[You may require to add a "return" statement at the end of your script if not already exists.]
+</textarea>&nbsp;<input type="button" value="Extract Content" onclick="extractContent();" />
+<br/>
+<input type="button" onclick="doEncode();" value="Encode"/>&nbsp;&nbsp;<input type="button" onclick="doDecode();" value="Decode"/>&nbsp;&nbsp;
+<input type="checkbox" id="jsmlop" name="jsmlop"/>JavaScript MultiLine Encoded Output
+<br/>
+<textarea name="outpBox" rows="10" cols="80">
+</textarea>
+</form>
+<script type="text/javascript">
+function doEncode(){
+var val=document.forms["inpForm"].elements["inpBox"].value;
+var val2=encodeURIComponent(val).split("").reverse().join("");
+var re=new RegExp("%","g");
+val2=val2.replace(re,String.fromCharCode(47));
+
+if(!document.getElementById("jsmlop").checked){
+document.forms["inpForm"].elements["outpBox"].value=val2;
+}else{
+var ls=121;
+var tmp=val2;
+var ctr=0;
+var content=[];
+content.push("var sbody=[];");
+while(tmp.length>ls){
+content.push("sbody.push(\""+tmp.substring((ls*ctr),((ls*ctr)+ls))+"\");");
+tmp=tmp.substring((ls*ctr)+ls,tmp.length);
+}
+if(tmp.length!=0){
+content.push("sbody.push(\""+tmp+"\");");
+}
+document.forms["inpForm"].elements["outpBox"].value=content.join("\n");
+}
+
+}
+
+function doDecode(){
+var val=document.forms["inpForm"].elements["inpBox"].value;
+var val2=val.split("").reverse().join("");
+var re=new RegExp(String.fromCharCode(47),"g");
+val2=val2.replace(re,String.fromCharCode(92)+"x");
+val2=eval("\""+val2+"\"");
+document.forms["inpForm"].elements["outpBox"].value=val2;
+}
+
+function extractContent(){
+var sval=document.forms["inpForm"].elements["scriptInputBox"].value;
+var strsval=Function(sval)();
+document.forms["inpForm"].elements["inpBox"].value=strsval;
+}
+</script>
+</body>
+</html>

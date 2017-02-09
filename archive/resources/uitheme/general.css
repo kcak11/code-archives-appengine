@@ -1,0 +1,34 @@
+*{
+padding:0px;
+margin:0px;
+}
+
+#bodyDiv{
+color:rgb(156,90,60);
+}
+
+#bodyDiv p{
+color:rgb(156,90,60);
+}
+
+#bodyDiv td{
+color:rgb(156,90,60);
+}
+
+#bodyDiv th{
+color:rgb(156,90,60);
+}
+
+.dpHeading{
+background-image:url('../images/divheadbg.png');
+background-repeat:repeat-y;
+padding-left:30px;
+padding-top:10px;
+border:2px solid #000000;
+height:30px;
+width:800px;
+}
+
+.kbaseTable{
+width:500px;
+}
